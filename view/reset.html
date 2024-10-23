@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <title>Virizon Mgui</title>
+  <meta content="" name="description" />
+  <meta content="Themesdesign" name="author" />
+  <link rel="shortcut icon" href="assets/images/favicon.ico">
+  <!-- Sweet Alert-->
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/metismenu.min.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <!-- Begin page -->
+  <div class="accountbg"></div>
+  <div class="wrapper-page">
+    <div class="card card-pages shadow-none">
+      <div class="card-body">
+        <h5 class="font-18 text-center">Reset Password</h5>
+        <form class="form-horizontal m-t-30" onsubmit="handleResetPassword(event)">
+          <div class="form-group">
+            <div class="col-12">
+              <label>New Password</label>
+              <input class="form-control" type="password" required="" placeholder="New Password" id="password" oninput="checkPasswordMatch()">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-12">
+              <label>Confirm Password</label>
+              <input class="form-control" type="password" required="" placeholder="Confirm Password" id="confirmPassword" oninput="checkPasswordMatch()">
+              <small id="passwordMatchText" class="form-text text-muted"></small>
+            </div>
+          </div>
+          <div class="form-group text-center m-t-20">
+            <div class="col-12">
+              <button class="btn btn-primary btn-block btn-lg waves-effect waves-light" type="submit" name="reset" id="resetButton">Reset Password</button>
+            </div>
+          </div>
+          <div class="form-group row m-t-30 m-b-0">
+            <div class="col-sm-5 text-left">
+              <a href="login" class="text-muted">
+                <i class="far fa-address-card"></i> Login Page </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- END wrapper -->
+  <!-- jQuery  -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/metismenu.min.js"></script>
+  <script src="assets/js/jquery.slimscroll.js"></script>
+  <script src="assets/js/waves.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.2/sweetalert2.all.min.js"></script>
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
+  <script>
+    function handleResetPassword(event) {
+      event.preventDefault();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      // Check if passwords match
+      if (password !== confirmPassword) {
+        swal("Error", "Passwords do not match", "error");
+        return;
+      }
+
+      const resetButton = document.getElementById('resetButton');
+      resetButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Reseting...';
+      resetButton.disabled = true;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const key = urlParams.get('key');
+
+      // Perform password reset request
+      fetch('api/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          key, // Replace with the actual reset token from the URL
+          password,
+        })
+      }).then(response => {
+        if (response.ok) {
+          // Password reset successful, redirect to another page or perform any other action
+          swal("Success", "Password reset successfully", "success").then(() => {
+            setTimeout(() => {
+              window.location.href = "/index"; // Replace with the desired redirect URL
+            }, 1000); // Delay in milliseconds (1 second)
+          });
+
+        } else {
+          return response.json().then(data => {
+            throw new Error(data.message);
+          });
+        }
+      }).catch(error => {
+        console.error('Error during password reset:', error);
+        swal("Error", error.message || "Password Reset Error. Please try again.", "error");
+      }).finally(() => {
+        // Revert the button state
+        resetButton.innerHTML = 'Reset Password';
+        resetButton.disabled = false;
+      });
+    }
+
+    function checkPasswordMatch() {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const passwordMatchText = document.getElementById('passwordMatchText');
+
+      if (password !== confirmPassword) {
+        passwordMatchText.textContent = 'Passwords do not match';
+        passwordMatchText.style.color = 'red';
+      } else {
+        passwordMatchText.textContent = 'Passwords match';
+        passwordMatchText.style.color = 'green';
+      }
+    }
+  </script>
+</body>
+</html>

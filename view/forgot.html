@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <title>Virizon Mgui</title>
+  <meta content="" name="description" />
+  <meta content="Themesdesign" name="author" />
+  <link rel="shortcut icon" href="assets/images/favicon.ico">
+  <!-- Sweet Alert-->
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/metismenu.min.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <!-- Begin page -->
+  <div class="accountbg"></div>
+  <div class="wrapper-page">
+    <div class="card card-pages shadow-none">
+      <div class="card-body">
+        <h5 class="font-18 text-center">Forgot Password</h5>
+        <form class="form-horizontal m-t-30" onsubmit="handleForgotPass(event)">
+          <div class="form-group">
+            <div class="col-12">
+              <label>Email</label>
+              <input class="form-control" type="email" required="" placeholder="Email" id="email">
+            </div>
+          </div>
+          <div class="form-group text-center m-t-20">
+            <div class="col-12">
+              <button class="btn btn-primary btn-block btn-lg waves-effect waves-light" type="submit" name="login" id="submitButton">Submit</button>
+            </div>
+          </div>
+          <div class="form-group row m-t-30 m-b-0">
+            <div class="col-sm-5 text-left">
+              <a href="login" class="text-muted">
+                <i class="far fa-address-card"></i> Login Page </a>
+            </div>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+  </div>
+  <!-- END wrapper -->
+  <!-- jQuery  -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/metismenu.min.js"></script>
+  <script src="assets/js/jquery.slimscroll.js"></script>
+  <script src="assets/js/waves.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.2/sweetalert2.all.min.js"></script>
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
+  <script>
+    function handleForgotPass(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const submitButton = document.getElementById('submitButton');
+      
+      // Disable the button and show loading animation
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
+      
+      // Perform forgot password request
+      fetch('/api/forgotpass', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+        })
+      }).then(response => {
+        if (response.ok) {
+          // Forgot password request successful
+          swal("Success", "Password reset instructions have been sent to your email.", "success");
+        } else {
+          return response.json().then(data => {
+            throw new Error(data.message);
+          });
+        }
+      }).catch(error => {
+        console.error('Error during forgot password:', error);
+        swal("Error", error.message || "Forgot Password Error. Please Try Again", "error");
+      }).finally(() => {
+        // Revert the button state
+        submitButton.innerHTML = 'Submit';
+        submitButton.disabled = false;
+      });
+    }
+  </script>
+</body>
+</html>

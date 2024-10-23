@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <title>Virizon Mgui</title>
+  <meta content="" name="description" />
+  <meta content="Themesdesign" name="author" />
+  <link rel="shortcut icon" href="assets/images/favicon.ico">
+  <!-- Sweet Alert-->
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/metismenu.min.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <!-- Begin page -->
+  <div class="accountbg"></div>
+  <div class="wrapper-page">
+    <div class="card card-pages shadow-none">
+      <div class="card-body">
+        <h5 class="font-18 text-center">Register to continue to Virizon Mgui.</h5>
+        <form class="form-horizontal m-t-30" onsubmit="handleRegister(event)">
+          <div class="form-group">
+            <div class="col-12">
+              <label>Username</label>
+              <input class="form-control" type="text" required="" placeholder="Username" id="username">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-12">
+              <label>Password</label>
+              <input class="form-control" type="password" required="" placeholder="Password" id="password">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-12">
+              <label>Email</label>
+              <input class="form-control" type="email" required="" placeholder="Email" id="email">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-12">
+              <label>Token</label>
+              <input class="form-control" type="text" required="" placeholder="Token" id="token">
+            </div>
+          </div>
+          <div class="form-group text-center m-t-20">
+            <div class="col-12">
+              <button class="btn btn-primary btn-block btn-lg waves-effect waves-light" type="submit" name="register" id="submitButton">Register</button>
+            </div>
+          </div>
+          <div class="form-group row m-t-30 m-b-0">
+            <div class="col-sm-7">
+              <a href="purchase" class="text-muted">
+                <i class="fa fa-shopping-basket"></i> Purchase Here </a>
+            </div>
+            <div class="col-sm-5 text-right">
+              <a href="login" class="text-muted">
+                <i class="far fa-address-card"></i> Login Page </a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- END wrapper -->
+<!-- jQuery  -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/metismenu.min.js"></script>
+<script src="assets/js/jquery.slimscroll.js"></script>
+<script src="assets/js/waves.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.2/sweetalert2.all.min.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>
